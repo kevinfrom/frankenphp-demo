@@ -11,4 +11,4 @@ services:
       - 443:443/udp
     environment:
       TZ: Europe/Copenhagen
-      SERVER_NAME: frankenphp-demo.local
+      SERVER_NAME: ${SERVER_NAME:-localhost}
