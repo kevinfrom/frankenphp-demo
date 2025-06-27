@@ -1,0 +1,14 @@
+services:
+  frankenphp:
+    container_name: app
+    image: dunglas/frankenphp
+    restart: unless-stopped
+    volumes:
+      - ./:/app
+    ports:
+      - 80:80
+      - 443:443
+      - 443:443/udp
+    environment:
+      TZ: Europe/Copenhagen
+      SERVER_NAME: frankenphp-demo.local
