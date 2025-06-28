@@ -4,9 +4,9 @@ declare(strict_types=1);
 namespace Core\Http\Middleware\Queue;
 
 use ArrayObject;
+use Core\Container\Container;
 use Core\Container\ContainerException;
 use Core\Container\NotFoundException;
-use Core\Container\StaticContainer;
 use Core\Http\Middleware\MiddlewareInterface;
 use Core\Http\Request\RequestHandlerInterface;
 
@@ -15,7 +15,7 @@ final class MiddlewareQueue implements MiddlewareQueueInterface
     protected readonly ArrayObject $queue;
     protected int $position = 0;
 
-    public function __construct(public StaticContainer $container)
+    public function __construct(public Container $container)
     {
         $this->queue = new ArrayObject();
     }

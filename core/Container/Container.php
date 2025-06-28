@@ -6,7 +6,7 @@ namespace Core\Container;
 use ArrayObject;
 use Psr\Container\ContainerInterface;
 
-final readonly class StaticContainer implements ContainerInterface
+final readonly class Container implements ContainerInterface
 {
     /** @var ArrayObject<class-string, class-string> */
     protected ArrayObject $bindings;
@@ -16,16 +16,16 @@ final readonly class StaticContainer implements ContainerInterface
 
     public function __construct()
     {
-        $this->bindings   = new ArrayObject();
+        $this->bindings = new ArrayObject();
         $this->singletons = new ArrayObject();
     }
 
     /**
      * Bind a service to the container.
      *
-     * @param class-string|string        $id The ID to bind the service to. Can be a class name or a string identifier.
+     * @param class-string|string $id The ID to bind the service to. Can be a class name or a string identifier.
      * @param null|class-string|callable $concrete The concrete implementation or a callable that returns the service.
-     * @param bool                       $singleton Whether to bind the service as a singleton.
+     * @param bool $singleton Whether to bind the service as a singleton.
      *
      * @return void
      * @throws ContainerException

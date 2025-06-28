@@ -7,9 +7,7 @@ $config = Config::getInstance();
 
 $config->set([
     'debug' => true,
-    'App'   => [
+    'App' => [
         'name' => 'FrankenPHP demo',
     ],
 ]);
-
-return $config;

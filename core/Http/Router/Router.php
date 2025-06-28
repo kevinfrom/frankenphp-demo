@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Core\Http\Router;
 
 use ArrayObject;
-use Core\Http\Exceptions\HttpException;
+use Core\Config\Config;
 use Core\Http\Exceptions\ServerErrors\InternalErrorException;
 use Core\Http\Middleware\Queue\MiddlewareQueueInterface;
 use Core\Http\Request\Factory\RequestFactoryInterface;
@@ -21,12 +21,13 @@ final readonly class Router implements RouterInterface
     protected ArrayObject $routes;
 
     public function __construct(
-        public RouteParserInterface $parser,
-        public HttpRunnerInterface $runner,
-        public RequestFactoryInterface $factory,
-        public MiddlewareQueueInterface $middlewareQueue,
+        public RouteParserInterface            $parser,
+        public HttpRunnerInterface             $runner,
+        public RequestFactoryInterface         $factory,
+        public MiddlewareQueueInterface        $middlewareQueue,
         public ServerResponseRendererInterface $renderer
-    ) {
+    )
+    {
         $this->routes = new ArrayObject();
     }
 
@@ -56,19 +57,11 @@ final readonly class Router implements RouterInterface
      */
     public function dispatch(): never
     {
-        $debug = (bool)config()->get('debug');
-
         try {
-            $request  = $this->factory->fromGlobals();
+            $request = $this->factory->fromGlobals();
             $response = $this->runner->run($this->middlewareQueue, $request);
-        } catch (HttpException $e) {
-            if ($debug) {
-                throw $e;
-            }
-
-            $response = response($e->getMessage(), $e->getCode());
         } catch (Throwable $e) {
-            if ($debug) {
+            if (Config::getInstance()->get('debug')) {
                 throw $e;
             }
 
