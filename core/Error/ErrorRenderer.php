@@ -30,12 +30,16 @@ final readonly class ErrorRenderer implements ErrorRendererInterface
     public string $template400;
 
     /**
-     * @throws InternalErrorException
+     * The template rendered for development errors.
+     * @var string
      */
+    public string $templateDevError;
+
     public function __construct()
     {
-        $this->template400 = $this->loadTemplate(400);
-        $this->template500 = $this->loadTemplate(500);
+        $this->template400 = config()->get('Error.templates.400') ?: '';
+        $this->template500 = config()->get('Error.templates.500') ?: '';
+        $this->templateDevError = config()->get('Error.templates.dev') ?: '';
     }
 
     /**
@@ -76,8 +80,11 @@ final readonly class ErrorRenderer implements ErrorRendererInterface
         $view->template = $template;
         $view->layout = 'error';
 
-        $view->setData('error', $exception->getMessage());
-        $view->setData('code', $exception->getCode());
+        if (config()->get('debug') && $exception->getCode() !== 404) {
+            $view->template = $this->templateDevError;
+            $view->layout = null;
+        }
+
         $view->setData('exception', $exception);
 
         return response($view, $exception->getCode());

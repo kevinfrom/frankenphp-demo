@@ -10,8 +10,9 @@ config()->set([
     ],
     'Error' => [
         'templates' => [
-            400 => 'Errors' . DS . '400',
-            500 => 'Errors' . DS . '500',
+            '400' => 'Errors' . DS . '400',
+            '500' => 'Errors' . DS . '500',
+            'dev' => 'Errors' . DS . 'dev',
         ],
     ],
 ]);

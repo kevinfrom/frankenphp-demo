@@ -7,20 +7,16 @@ use Core\Http\Exceptions\ServerErrors\InternalErrorException;
 
 final class HtmlView extends BaseView implements ViewInterface
 {
-    public string $template = '' {
-        set {
-            $this->template = $this->normalizePath($value);
-        }
-    }
+    public string $template = '';
 
     public ?string $layout = null {
-        set {
-            if (!$value) {
-                $this->layout = '';
+        set(?string $value) {
+            if ($value) {
+                // Prevent double slashes in the layout path.
+                $value = $this->normalizePath('Layouts' . DS . $value);
             }
 
-            // Prevent double slashes in the layout path.
-            $this->layout = $this->normalizePath('Layouts' . DS . $value);
+            $this->layout = $value;
         }
     }
 
