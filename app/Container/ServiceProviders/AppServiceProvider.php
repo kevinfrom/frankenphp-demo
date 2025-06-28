@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace App;
+namespace App\Container\ServiceProviders;
 
 use App\Middleware\TimerMiddleware;
-use Core\Container\ServiceProviderInterface;
+use Core\Container\ServiceProviders\ServiceProviderInterface;
 use Psr\Clock\ClockInterface;
 use Psr\Container\ContainerInterface;
 

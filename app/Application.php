@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App;
 
+use App\Container\ServiceProviders\AppServiceProvider;
 use App\Middleware\TimerMiddleware;
 use Core\BaseApplication;
 use Core\Config\Config;
