@@ -5,6 +5,7 @@ use Core\Config\Config;
 use Core\Config\ConfigInterface;
 use Core\Http\Response\ServerResponse;
 use Core\Http\Response\ServerResponseInterface;
+use Core\View\ViewInterface;
 
 function config(): ConfigInterface
 {
@@ -14,23 +15,22 @@ function config(): ConfigInterface
 /**
  * Create an HTML response.
  *
- * @param string $body
- * @param int    $statusCode
+ * @param string|ViewInterface $body
+ * @param int $statusCode
+ * @param array<string, string|int|float|null> $headers
  *
  * @return ServerResponseInterface
  */
-function response(string $body, int $statusCode = 200): ServerResponseInterface
+function response(string|ViewInterface $body, int $statusCode = 200, array $headers = []): ServerResponseInterface
 {
-    return new ServerResponse($body, $statusCode, [
-        'Content-Type' => 'text/html; charset=UTF-8',
-    ]);
+    return new ServerResponse($body, $statusCode, $headers);
 }
 
 /**
  * Create a redirect response.
  *
  * @param string $url
- * @param int    $statusCode
+ * @param int $statusCode
  *
  * @return ServerResponseInterface
  */

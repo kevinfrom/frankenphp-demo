@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Core\Http\Response;
 
+use Core\View\ViewInterface;
+
 interface ServerResponseInterface
 {
     /**
@@ -64,11 +66,36 @@ interface ServerResponseInterface
     public function unsetHeader(string $name): void;
 
     /**
+     * Get content type of the response.
+     *
+     * @return string
+     */
+    public function getContentType(): string;
+
+    /**
+     * Set the content type of the response.
+     *
+     * @param string $contentType
+     *
+     * @return void
+     */
+    public function setContentType(string $contentType): void;
+
+    /**
      * Get string representation of the response body.
      *
      * @return string
      */
     public function getStringBody(): string;
+
+    /**
+     * Set the body of the response.
+     *
+     * @param string|ViewInterface $body
+     *
+     * @return void
+     */
+    public function setBody(string|ViewInterface $body): void;
 
     /**
      * Set the response body as a string.

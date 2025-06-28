@@ -17,15 +17,21 @@ use Core\Http\Exceptions\ServerErrors\GatewayTimeoutException;
 use Core\Http\Exceptions\ServerErrors\InternalErrorException;
 use Core\Http\Exceptions\ServerErrors\NotImplementedException;
 use Core\Http\Exceptions\ServerErrors\ServiceUnavailableException;
+use Core\View\ViewInterface;
 
 final class ServerResponse implements ServerResponseInterface
 {
     protected ArrayObject $headers;
 
+    /**
+     * @param string|ViewInterface $body
+     * @param int $statusCode
+     * @param array<string, string|int|float|null> $headers
+     */
     public function __construct(
-        protected string $body = '',
-        protected int    $statusCode = 200,
-        array            $headers = []
+        protected string|ViewInterface $body = '',
+        protected int                  $statusCode = 200,
+        array                          $headers = []
     )
     {
         $this->headers = new ArrayObject();
@@ -34,8 +40,13 @@ final class ServerResponse implements ServerResponseInterface
             $this->setHeader($name, $value);
         }
 
-        if (!$this->getHeaderLine('Content-Type')) {
-            $this->setHeader('Content-Type', 'text/html; charset=UTF-8');
+        if (!$this->getContentType()) {
+            $contentType = 'text/html; charset=UTF-8';
+            if ($this->body instanceof ViewInterface) {
+                $contentType = $this->body->getContentType();
+            }
+
+            $this->setContentType($contentType);
         }
     }
 
@@ -157,9 +168,37 @@ final class ServerResponse implements ServerResponseInterface
     /**
      * @inheritDoc
      */
+    public function getContentType(): string
+    {
+        return $this->getHeaderLine('Content-Type') ?: '';
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setContentType(string $contentType): void
+    {
+        $this->setHeader('Content-Type', $contentType);
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function getStringBody(): string
     {
+        if ($this->body instanceof ViewInterface) {
+            return $this->body->render();
+        }
+
         return $this->body;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setBody(string|ViewInterface $body): void
+    {
+        $this->body = $body;
     }
 
     /**
