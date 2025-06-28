@@ -24,10 +24,15 @@ final class ServerResponse implements ServerResponseInterface
 
     public function __construct(
         protected string $body = '',
-        protected int $statusCode = 200,
-        array $headers = []
-    ) {
-        $this->headers = new ArrayObject($headers);
+        protected int    $statusCode = 200,
+        array            $headers = []
+    )
+    {
+        $this->headers = new ArrayObject();
+
+        foreach ($headers as $name => $value) {
+            $this->setHeader($name, $value);
+        }
 
         if (!$this->getHeaderLine('Content-Type')) {
             $this->setHeader('Content-Type', 'text/html; charset=UTF-8');
