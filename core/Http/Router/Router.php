@@ -54,6 +54,7 @@ final readonly class Router implements RouterInterface
 
     /**
      * @inheritDoc
+     * @throws Throwable
      */
     public function dispatch(): never
     {
