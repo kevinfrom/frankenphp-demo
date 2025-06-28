@@ -5,7 +5,7 @@ namespace Core\View;
 
 use ArrayObject;
 
-abstract readonly class BaseView implements ViewInterface
+abstract class BaseView implements ViewInterface
 {
     protected ArrayObject $templateData;
 
@@ -17,7 +17,7 @@ abstract readonly class BaseView implements ViewInterface
     /**
      * @inheritDoc
      */
-    public function getTemplateData(): array
+    public function getData(): array
     {
         return $this->templateData->getArrayCopy();
     }
@@ -25,8 +25,14 @@ abstract readonly class BaseView implements ViewInterface
     /**
      * @inheritDoc
      */
-    public function setTemplateData(string $key, mixed $value): void
+    public function setData(string|array $key, mixed $value = null): void
     {
-        $this->templateData->offsetSet($key, $value);
+        if (is_string($key)) {
+            $this->templateData->offsetSet($key, $value);
+
+            return;
+        }
+
+        $this->templateData->exchangeArray(array_merge($this->getData(), $key));
     }
 }

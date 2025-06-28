@@ -8,8 +8,11 @@ use App\Middleware\AppNameMiddleware;
 use App\Middleware\TimerMiddleware;
 use Core\BaseApplication;
 use Core\Container\Container;
+use Core\Http\Exceptions\ClientErrors\NotFoundException;
+use Core\Http\Exceptions\ServerErrors\InternalErrorException;
 use Core\Http\Middleware\Queue\MiddlewareQueueInterface;
 use Core\Http\Router\RouterInterface;
+use function Core\view;
 
 final class Application extends BaseApplication
 {
@@ -39,9 +42,11 @@ final class Application extends BaseApplication
      */
     public function routes(RouterInterface $router): void
     {
-        $router->get('/', fn() => response('Hello World!'));
+        $router->get('/error404', fn() => throw new NotFoundException('Test 404 exception'));
+        $router->get('/error500', fn() => throw new InternalErrorException('Test 500 exception'));
 
-        $router->get('/about', fn() => response('This project runs using FrankenPHP and is built entirely from scratch!'));
+        $router->get('/', fn() => view('Pages/index'));
+        $router->get('/about', fn() => view('Pages/about'));
 
         $router->redirect('/redirect', '/about');
     }
@@ -51,7 +56,6 @@ final class Application extends BaseApplication
      */
     public function bootstrap(): void
     {
-        require CONFIG_DIR . '/helpers.php';
         require CONFIG_DIR . '/configuration.php';
     }
 }

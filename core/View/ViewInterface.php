@@ -17,16 +17,16 @@ interface ViewInterface
      *
      * @return array
      */
-    public function getTemplateData(): array;
+    public function getData(): array;
 
     /**
      * Set template data
      *
-     * @param string $key
-     * @param mixed $value
+     * @param string|array $key If key is a string, it will be used as the key for the value. If $key is an array, it will be merged with the existing data.
+     * @param mixed $value If $key is a string, this will be the value associated with that key. If $key is an array, this parameter is ignored.
      * @return void
      */
-    public function setTemplateData(string $key, mixed $value): void;
+    public function setData(string|array $key, mixed $value): void;
 
     /**
      * Render the view and return the content.

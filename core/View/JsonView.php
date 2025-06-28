@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Core\View;
 
-final readonly class JsonView extends BaseView implements ViewInterface
+final class JsonView extends BaseView implements ViewInterface
 {
     /**
      * @inheritDoc
@@ -18,6 +18,6 @@ final readonly class JsonView extends BaseView implements ViewInterface
      */
     public function render(): string
     {
-        return json_encode($this->getTemplateData());
+        return json_encode($this->getData());
     }
 }

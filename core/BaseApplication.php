@@ -20,7 +20,7 @@ abstract class BaseApplication
     {
         $this->bootstrap();
 
-        $this->container = $this->services(new Container());
+        $this->container = $this->services(container());
 
         $router = $this->container->get(RouterInterface::class);
         $this->middleware($router->getMiddlewareQueue());

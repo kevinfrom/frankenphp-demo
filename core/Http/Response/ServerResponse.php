@@ -41,7 +41,7 @@ final class ServerResponse implements ServerResponseInterface
         }
 
         if (!$this->getContentType()) {
-            $contentType = 'text/html; charset=UTF-8';
+            $contentType = 'text/html';
             if ($this->body instanceof ViewInterface) {
                 $contentType = $this->body->getContentType();
             }

@@ -6,18 +6,34 @@ namespace Core\Container;
 use ArrayObject;
 use Psr\Container\ContainerInterface;
 
-final readonly class Container implements ContainerInterface
+final class Container implements ContainerInterface
 {
+    protected static ?self $instance = null;
+
     /** @var ArrayObject<class-string, class-string> */
-    protected ArrayObject $bindings;
+    protected readonly ArrayObject $bindings;
 
     /** @var ArrayObject<class-string, object> */
-    protected ArrayObject $singletons;
+    protected readonly ArrayObject $singletons;
 
-    public function __construct()
+    protected function __construct()
     {
         $this->bindings = new ArrayObject();
         $this->singletons = new ArrayObject();
+    }
+
+    /**
+     * Get the singleton instance of the container.
+     *
+     * @return self
+     */
+    public static function getInstance(): self
+    {
+        if (!self::$instance) {
+            self::$instance = new self();
+        }
+
+        return self::$instance;
     }
 
     /**

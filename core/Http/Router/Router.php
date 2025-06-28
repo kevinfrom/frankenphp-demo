@@ -5,8 +5,6 @@ namespace Core\Http\Router;
 
 use ArrayObject;
 use Closure;
-use Core\Config\Config;
-use Core\Http\Exceptions\ServerErrors\InternalErrorException;
 use Core\Http\Middleware\Queue\MiddlewareQueueInterface;
 use Core\Http\Request\Factory\RequestFactoryInterface;
 use Core\Http\Request\RequestHandlerInterface;
@@ -16,6 +14,9 @@ use Core\Http\Response\ServerResponseInterface;
 use Core\Http\RouteParser\RouteParserInterface;
 use Core\Http\Runner\HttpRunnerInterface;
 use Throwable;
+use function Core\config;
+use function Core\redirect;
+use function Core\response;
 
 final readonly class Router implements RouterInterface
 {
@@ -132,11 +133,11 @@ final readonly class Router implements RouterInterface
             $request = $this->factory->fromGlobals();
             $response = $this->runner->run($this->middlewareQueue, $request);
         } catch (Throwable $e) {
-            if (Config::getInstance()->get('debug')) {
+            if (config()->get('debug')) {
                 throw $e;
             }
 
-            $response = response(InternalErrorException::REASON_PHRASE, InternalErrorException::STATUS_CODE);
+            $response = response('Internal Server Error', 500);
         }
 
         $this->renderer->render($response);
