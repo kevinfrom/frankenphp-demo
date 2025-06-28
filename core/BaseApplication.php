@@ -5,7 +5,9 @@ namespace Core;
 
 use Core\Container\Container;
 use Core\Container\ServiceProviders\CoreServiceProvider;
+use Core\Http\Middleware\ErrorHandlerMiddleware;
 use Core\Http\Middleware\Queue\MiddlewareQueueInterface;
+use Core\Http\Middleware\RoutingMiddleware;
 use Core\Http\Router\RouterInterface;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
@@ -16,13 +18,13 @@ abstract class BaseApplication
 
     public function __construct()
     {
+        $this->bootstrap();
+
         $this->container = $this->services(new Container());
 
         $router = $this->container->get(RouterInterface::class);
         $this->middleware($router->getMiddlewareQueue());
         $this->routes($router);
-
-        $this->bootstrap();
     }
 
     /**
@@ -47,6 +49,8 @@ abstract class BaseApplication
      */
     public function middleware(MiddlewareQueueInterface $middleware): void
     {
+        $middleware->addMiddleware(ErrorHandlerMiddleware::class);
+        $middleware->addMiddleware(RoutingMiddleware::class);
     }
 
     /**

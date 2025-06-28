@@ -4,15 +4,12 @@ declare(strict_types=1);
 namespace App;
 
 use App\Container\ServiceProviders\AppServiceProvider;
+use App\Middleware\AppNameMiddleware;
 use App\Middleware\TimerMiddleware;
 use Core\BaseApplication;
-use Core\Config\Config;
 use Core\Container\Container;
-use Core\Http\Middleware\ErrorHandlerMiddleware;
 use Core\Http\Middleware\Queue\MiddlewareQueueInterface;
-use Core\Http\Middleware\RoutingMiddleware;
 use Core\Http\Router\RouterInterface;
-use Spatie\Ignition\Ignition;
 
 final class Application extends BaseApplication
 {
@@ -31,9 +28,10 @@ final class Application extends BaseApplication
      */
     public function middleware(MiddlewareQueueInterface $middleware): void
     {
+        parent::middleware($middleware);
+
         $middleware->addMiddleware(TimerMiddleware::class);
-        $middleware->addMiddleware(ErrorHandlerMiddleware::class);
-        $middleware->addMiddleware(RoutingMiddleware::class);
+        $middleware->addMiddleware(AppNameMiddleware::class);
     }
 
     /**
@@ -41,6 +39,10 @@ final class Application extends BaseApplication
      */
     public function routes(RouterInterface $router): void
     {
+        $router->get('/error', function () {
+            throw new \Core\Http\Exceptions\ServerErrors\InternalErrorException('Test exception');
+        });
+
         $router->get('/', fn() => response('Hello World!'));
 
         $router->get('/about', fn() => response('This project runs using FrankenPHP and is built entirely from scratch!'));
@@ -55,9 +57,5 @@ final class Application extends BaseApplication
     {
         require CONFIG_DIR . '/helpers.php';
         require CONFIG_DIR . '/configuration.php';
-
-        if (Config::getInstance()->get('debug')) {
-            Ignition::make()->register();
-        }
     }
 }
