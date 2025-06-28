@@ -1,8 +1,15 @@
 <?php
 declare(strict_types=1);
 
+use Core\Config\Config;
+use Core\Config\ConfigInterface;
 use Core\Http\Response\ServerResponse;
 use Core\Http\Response\ServerResponseInterface;
+
+function config(): ConfigInterface
+{
+    return Config::getInstance();
+}
 
 /**
  * Create an HTML response.
