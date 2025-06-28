@@ -21,11 +21,9 @@ final class Application extends BaseApplication
      */
     public function services(Container $container): Container
     {
-        $container = parent::services($container);
-
         new AppServiceProvider()->register($container);
 
-        return $container;
+        return parent::services($container);
     }
 
     /**
