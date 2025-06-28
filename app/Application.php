@@ -39,10 +39,6 @@ final class Application extends BaseApplication
      */
     public function routes(RouterInterface $router): void
     {
-        $router->get('/error', function () {
-            throw new \Core\Http\Exceptions\ServerErrors\InternalErrorException('Test exception');
-        });
-
         $router->get('/', fn() => response('Hello World!'));
 
         $router->get('/about', fn() => response('This project runs using FrankenPHP and is built entirely from scratch!'));
