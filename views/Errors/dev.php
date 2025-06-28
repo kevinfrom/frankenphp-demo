@@ -59,7 +59,13 @@ foreach ($exception->getTrace() as $item) {
 <main>
     <div class="mx-auto px-4 sm:max-w-[640px] md:max-w-[768px] lg:max-w-[1024px] xl:max-w-[1280px] 2xl:max-w-[1536px]">
         <div class="mt-12 p-6 rounded shadow bg-gray-50 dark:bg-gray-800">
-            <p class="font-medium"><?= \Core\sanitize($exception::class) ?></p>
+            <div class="flex justify-between">
+                <p class="font-semibold"><?= \Core\sanitize($exception::class) ?></p>
+                <p class="opacity-50">php <?= PHP_VERSION ?></p>
+            </div>
+
+            <hr class="my-2 text-gray-300 dark:text-gray-700">
+            <p><?= \Core\sanitize($exception->getMessage()) ?></p>
             <p class="opacity-50"><?= sprintf('Thrown at %s:%d', $replaceRoot($exception->getFile()), $exception->getLine()) ?></p>
         </div>
 
