@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 namespace Core\Container\ServiceProviders;
 
-use Psr\Container\ContainerInterface;
+use Core\Container\Container;
 
 interface ServiceProviderInterface
 {
     /**
      * Register services in the container.
      *
-     * @param ContainerInterface $container
+     * @param Container $container
      * @return void
      */
-    public function register(ContainerInterface $container): void;
+    public function register(Container $container): void;
 }
