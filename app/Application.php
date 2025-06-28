@@ -11,9 +11,6 @@ use Core\Container\Container;
 use Core\Http\Middleware\ErrorHandlerMiddleware;
 use Core\Http\Middleware\Queue\MiddlewareQueueInterface;
 use Core\Http\Middleware\RoutingMiddleware;
-use Core\Http\Response\ServerResponseInterface;
-use Core\Http\Route\RouteInterface;
-use Core\Http\Route\StaticRoute;
 use Core\Http\Router\RouterInterface;
 use Spatie\Ignition\Ignition;
 
@@ -46,17 +43,11 @@ final class Application extends BaseApplication
      */
     public function routes(RouterInterface $router): void
     {
-        $router->addRoute(new StaticRoute([RouteInterface::GET, RouteInterface::HEAD], '/', function (): ServerResponseInterface {
-            return response('Hello World!');
-        }));
+        $router->get('/', fn() => response('Hello World!'));
 
-        $router->addRoute(new StaticRoute([RouteInterface::GET, RouteInterface::HEAD], '/about', function (): ServerResponseInterface {
-            return response('This project runs using FrankenPHP and is built entirely from scratch!');
-        }));
+        $router->get('/about', fn() => response('This project runs using FrankenPHP and is built entirely from scratch!'));
 
-        $router->addRoute(new StaticRoute([RouteInterface::GET, RouteInterface::HEAD], '/redirect', function (): ServerResponseInterface {
-            return redirect('/about');
-        }));
+        $router->redirect('/redirect', '/about');
     }
 
     /**
