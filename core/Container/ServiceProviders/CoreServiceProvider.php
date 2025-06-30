@@ -36,7 +36,7 @@ final readonly class CoreServiceProvider implements ServiceProviderInterface
      */
     public function register(Container $container): void
     {
-        $container->bindSingleton(ConfigInterface::class, fn(): ConfigInterface => Config::getInstance());
+        $container->bindSingleton(ConfigInterface::class, Config::class);
         $container->bindSingleton(MiddlewareQueueInterface::class, MiddlewareQueue::class);
         $container->bindSingleton(RouterInterface::class, Router::class);
 

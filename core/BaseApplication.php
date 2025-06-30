@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Core;
 
+use Core\Config\ConfigInterface;
 use Core\Container\Container;
+use Core\Container\ContainerException;
 use Core\Container\ServiceProviders\CoreServiceProvider;
 use Core\Http\Middleware\ErrorHandlerMiddleware;
 use Core\Http\Middleware\Queue\MiddlewareQueueInterface;
@@ -17,15 +19,40 @@ abstract class BaseApplication
 {
     public readonly Container $container;
 
+    /**
+     * @throws ContainerException
+     * @throws ReflectionException
+     * @throws ContainerExceptionInterface
+     */
     public function __construct()
     {
         $this->bootstrap();
+    }
 
-        $this->container = $this->services(container());
+    /**
+     * Configure the application.
+     *
+     * @param ConfigInterface $config
+     *
+     * @return ConfigInterface
+     */
+    public function configuration(ConfigInterface $config): ConfigInterface
+    {
+        $config->set([
+            'debug' => true,
+            'App'   => [
+                'timezone' => env('APP_TIMEZONE') ?: 'Europe/Copenhagen',
+            ],
+            'Error' => [
+                'templates' => [
+                    '400' => 'Errors' . DS . '400',
+                    '500' => 'Errors' . DS . '500',
+                    'dev' => 'Errors' . DS . 'dev',
+                ],
+            ],
+        ]);
 
-        $router = $this->container->get(RouterInterface::class);
-        $this->middleware($router->getMiddlewareQueue());
-        $this->routes($router);
+        return $config;
     }
 
     /**
@@ -70,14 +97,28 @@ abstract class BaseApplication
      * Bootstrap the application and load configuration.
      *
      * @return void
+     * @throws ContainerException
+     * @throws ReflectionException
      */
-    abstract public function bootstrap(): void;
+    public function bootstrap(): void
+    {
+        $this->container = $this->services(container());
+
+        $config = $this->container->get(ConfigInterface::class);
+        $this->configuration($config);
+
+        ini_set('date.timezone', $config->get('App.timezone'));
+
+        $router = $this->container->get(RouterInterface::class);
+        $this->middleware($router->getMiddlewareQueue());
+        $this->routes($router);
+    }
 
     /**
      * Run the application.
      *
      * @return never
-     * @throws ContainerExceptionInterface
+     * @throws ContainerException
      * @throws ReflectionException
      */
     final public function run(): never

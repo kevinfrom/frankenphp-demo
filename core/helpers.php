@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Core;
 
-use Core\Config\Config;
 use Core\Config\ConfigInterface;
 use Core\Container\Container;
 use Core\Container\ContainerException;
@@ -13,6 +12,7 @@ use Core\Http\Response\ServerResponse;
 use Core\Http\Response\ServerResponseInterface;
 use Core\View\HtmlView;
 use Core\View\ViewInterface;
+use ReflectionException;
 
 /**
  * Get an environment variable.
@@ -104,10 +104,12 @@ function container(): Container
  * Get the configuration.
  *
  * @return ConfigInterface
+ * @throws ContainerException
+ * @throws ReflectionException
  */
 function config(): ConfigInterface
 {
-    return Config::getInstance();
+    return container()->get(ConfigInterface::class);
 }
 
 /**

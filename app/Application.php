@@ -8,6 +8,7 @@ use App\Controller\ErrorController;
 use App\Middleware\AppNameMiddleware;
 use App\Middleware\TimerMiddleware;
 use Core\BaseApplication;
+use Core\Config\ConfigInterface;
 use Core\Http\Exceptions\ClientErrors\NotFoundException;
 use Core\Http\Exceptions\ServerErrors\InternalErrorException;
 use Core\Http\Middleware\Queue\MiddlewareQueueInterface;
@@ -17,6 +18,14 @@ use function Core\view;
 
 final class Application extends BaseApplication
 {
+    public function configuration(ConfigInterface $config): ConfigInterface
+    {
+        $config = parent::configuration($config);
+        $config->set('App.name', 'FrankenPHP demo');
+
+        return $config;
+    }
+
     /**
      * @inheritDoc
      */
@@ -44,13 +53,5 @@ final class Application extends BaseApplication
 
         $router->controller(['GET'], '/error/404', ErrorController::class, 'throw404');
         $router->controller(['GET'], '/error/500', ErrorController::class, 'throw500');
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function bootstrap(): void
-    {
-        require CONFIG_DIR . '/configuration.php';
     }
 }

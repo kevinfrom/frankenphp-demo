@@ -13,23 +13,9 @@ final class Config implements ConfigInterface
 
     protected readonly ArrayObject $config;
 
-    protected function __construct()
+    public function __construct()
     {
         $this->config = new ArrayObject();
-    }
-
-    /**
-     * Get singleton instance.
-     *
-     * @return self
-     */
-    public static function getInstance(): self
-    {
-        if (!self::$instance) {
-            self::$instance = new self();
-        }
-
-        return self::$instance;
     }
 
     /**
