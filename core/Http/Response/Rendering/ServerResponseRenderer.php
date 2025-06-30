@@ -13,12 +13,20 @@ final readonly class ServerResponseRenderer implements ServerResponseRendererInt
      */
     public function render(ServerResponseInterface $response): string
     {
-        http_response_code($response->getStatusCode());
+        headers_send(103);
+
+        $statusCode = $response->getStatusCode();
 
         foreach ($response->getHeaders() as $name => $value) {
-            header("$name: $value");
+            header("$name: $value", true, $statusCode);
         }
 
-        return $response->getStringBody();
+        $body = $response->getStringBody();
+
+        if (!$response->getHeaderLine('Content-Length')) {
+            header('Content-Length: ' . strlen($body), true, $statusCode);
+        }
+
+        return $body;
     }
 }

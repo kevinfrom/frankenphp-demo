@@ -8,7 +8,9 @@ declare(strict_types=1);
  * @var \Core\View\ViewRendererInterface $this
  */
 
-$title ??= '';
+\Core\preloadAsset('/bootstrap.min.css', 'style');
+
+$title ??= \Core\config()->get('App.name');
 ?>
 
 <!doctype html>

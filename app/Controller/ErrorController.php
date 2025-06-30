@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use Core\Http\Exceptions\ClientErrors\NotFoundException;
 use Core\Http\Exceptions\ServerErrors\InternalErrorException;
+use function Core\preloadAsset;
 
 final readonly class ErrorController
 {
@@ -22,6 +23,7 @@ final readonly class ErrorController
      */
     public function throw500(): void
     {
+        preloadAsset('https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4', 'script');
         throw new InternalErrorException('Test 500 exception');
     }
 }

@@ -161,3 +161,16 @@ function redirect(string $url, int $statusCode = 302): ServerResponseInterface
         'Location' => $url,
     ]);
 }
+
+/**
+ * Tell the client to preload assets using HTTP 103 Early Hints response.
+ *
+ * @param string $url The URL of the asset to preload.
+ * @param string $as The type of the asset (e.g., 'style', 'script', 'font', etc.).
+ *
+ * @return void
+ */
+function preloadAsset(string $url, string $as): void
+{
+    header("Link: <$url>; rel=preload; as=$as", false, 103);
+}
