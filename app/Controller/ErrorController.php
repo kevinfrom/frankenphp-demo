@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use Core\Http\Exceptions\ClientErrors\NotFoundException;
 use Core\Http\Exceptions\ServerErrors\InternalErrorException;
+
 use function Core\preloadAsset;
 
 final readonly class ErrorController

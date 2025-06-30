@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Application;
+
 use function Core\container;
 
 ini_set('display_errors', 'on');
