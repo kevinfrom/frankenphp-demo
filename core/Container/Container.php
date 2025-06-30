@@ -138,7 +138,7 @@ final class Container implements ContainerInterface
             $type = $parameter->getType();
             $name = $parameter->getName();
 
-            if (!$type || $type->isBuiltin()) {
+            if (!$type) {
                 throw new ContainerException("Cannot resolve service, parameter is not a class: $name");
             }
 
@@ -148,6 +148,14 @@ final class Container implements ContainerInterface
                         return $this->get($unionType->getName());
                     }
                 }
+            }
+
+            if ($type->isBuiltin()) {
+                if ($parameter->isDefaultValueAvailable()) {
+                    return $parameter->getDefaultValue();
+                }
+
+                throw new ContainerException("Cannot resolve service, parameter is a built-in type: $name");
             }
 
             return $this->get($type->getName());
