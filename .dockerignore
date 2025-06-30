@@ -1,0 +1,11 @@
+.git
+.editorconfig
+.env.example
+.gitattributes
+.gitignore
+composer.json
+composer.lock
+docker-compose.yml
+phpcs.xml
+README.md
+static-build.Dockerfile
