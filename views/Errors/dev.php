@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 $replaceRoot = function (string $path): string {
@@ -10,7 +11,7 @@ $replaceRoot = function (string $path): string {
 };
 
 /**
- * @var Throwable $exception
+ * @var Throwable                        $exception
  * @var \Core\View\ViewRendererInterface $this
  */
 
@@ -37,8 +38,8 @@ foreach ($exception->getTrace() as $item) {
     }
 
     $stack[] = [
-        'file' => $replaceRoot($item['file']),
-        'line' => $item['line'],
+        'file'     => $replaceRoot($item['file']),
+        'line'     => $item['line'],
         'function' => $function,
     ];
 }
@@ -66,7 +67,9 @@ foreach ($exception->getTrace() as $item) {
 
             <hr class="my-2 text-gray-300 dark:text-gray-700">
             <p><?= \Core\sanitize($exception->getMessage()) ?></p>
-            <p class="opacity-50"><?= sprintf('Thrown at %s:%d', $replaceRoot($exception->getFile()), $exception->getLine()) ?></p>
+            <p class="opacity-50">
+                <?= sprintf('Thrown at %s:%d', $replaceRoot($exception->getFile()), $exception->getLine()) ?>
+            </p>
         </div>
 
         <div class="mt-12 rounded shadow bg-gray-50 dark:bg-gray-800">

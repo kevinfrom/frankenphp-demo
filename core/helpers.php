@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Core;
@@ -112,8 +113,8 @@ function config(): ConfigInterface
 /**
  * Create an HTML response.
  *
- * @param string|ViewInterface $body
- * @param int $statusCode
+ * @param string|ViewInterface                 $body
+ * @param int                                  $statusCode
  * @param array<string, string|int|float|null> $headers
  *
  * @return ServerResponseInterface
@@ -127,7 +128,7 @@ function response(string|ViewInterface $body, int $statusCode = 200, array $head
  * Create an HTML view.
  *
  * @param string $template
- * @param array $data
+ * @param array  $data
  * @param string $layout
  *
  * @return ServerResponseInterface
@@ -137,8 +138,8 @@ function response(string|ViewInterface $body, int $statusCode = 200, array $head
 function view(string $template, array $data = [], string $layout = 'default'): ServerResponseInterface
 {
     $view = container()->get(HtmlView::class);
-    $view->template = $template;
-    $view->layout = $layout;
+    $view->setTemplate($template);
+    $view->setLayout($layout);
     $view->setData($data);
 
     return new ServerResponse($view);
@@ -148,7 +149,7 @@ function view(string $template, array $data = [], string $layout = 'default'): S
  * Create a redirect response.
  *
  * @param string $url
- * @param int $statusCode
+ * @param int    $statusCode
  *
  * @return ServerResponseInterface
  */

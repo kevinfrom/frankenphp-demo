@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Core\Http\Runner;
@@ -18,5 +19,8 @@ interface HttpRunnerInterface extends RequestHandlerInterface
      *
      * @return ServerResponseInterface
      */
-    public function run(MiddlewareQueueInterface $middlewareQueue, ServerRequestInterface $request): ServerResponseInterface;
+    public function run(
+        MiddlewareQueueInterface $middlewareQueue,
+        ServerRequestInterface $request
+    ): ServerResponseInterface;
 }

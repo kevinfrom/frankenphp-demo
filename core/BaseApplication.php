@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Core;
@@ -31,10 +32,11 @@ abstract class BaseApplication
      * Register services in the container.
      *
      * @param Container $container
+     *
      * @return Container
      * @throws ContainerExceptionInterface
      */
-    function services(Container $container): Container
+    public function services(Container $container): Container
     {
         new CoreServiceProvider()->register($container);
 
@@ -45,6 +47,7 @@ abstract class BaseApplication
      * Register global middleware in the router.
      *
      * @param MiddlewareQueueInterface $middleware
+     *
      * @return void
      */
     public function middleware(MiddlewareQueueInterface $middleware): void
@@ -57,6 +60,7 @@ abstract class BaseApplication
      * Register routes in the router.
      *
      * @param RouterInterface $router
+     *
      * @return void
      */
     public function routes(RouterInterface $router): void
@@ -68,7 +72,7 @@ abstract class BaseApplication
      *
      * @return void
      */
-    abstract function bootstrap(): void;
+    abstract public function bootstrap(): void;
 
     /**
      * Run the application.

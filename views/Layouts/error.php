@@ -1,9 +1,10 @@
 <?php
+
 declare(strict_types=1);
 
 /**
- * @var string $content
- * @var Throwable $exception
+ * @var string                           $content
+ * @var Throwable                        $exception
  * @var \Core\View\ViewRendererInterface $this
  */
 
@@ -17,7 +18,7 @@ $title = match ($exception->getCode()) {
 };
 
 echo $this->render('Layouts/default', [
-    'title' => $title,
+    'title'   => $title,
     'content' => <<<HTML
         <div class="mt-5 d-flex justify-content-center align-items-center text-center">$content</div>
     HTML,

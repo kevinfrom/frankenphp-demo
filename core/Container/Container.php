@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Core\Container;
@@ -18,7 +19,7 @@ final class Container implements ContainerInterface
 
     protected function __construct()
     {
-        $this->bindings = new ArrayObject();
+        $this->bindings   = new ArrayObject();
         $this->singletons = new ArrayObject();
     }
 
@@ -39,9 +40,9 @@ final class Container implements ContainerInterface
     /**
      * Bind a service to the container.
      *
-     * @param class-string|string $id The ID to bind the service to. Can be a class name or a string identifier.
+     * @param class-string|string        $id The ID to bind the service to. Can be a class name or a string identifier.
      * @param null|class-string|callable $concrete The concrete implementation or a callable that returns the service.
-     * @param bool $singleton Whether to bind the service as a singleton.
+     * @param bool                       $singleton Whether to bind the service as a singleton.
      *
      * @return void
      * @throws ContainerException
@@ -57,7 +58,7 @@ final class Container implements ContainerInterface
         if ($singleton) {
             $concrete = function () use ($id, $concrete) {
                 if (!$this->singletons->offsetExists($id)) {
-                    $this->singletons->offsetSet($id, is_callable($concrete) ? $concrete($this) : new $concrete);
+                    $this->singletons->offsetSet($id, is_callable($concrete) ? $concrete($this) : new $concrete());
                 }
 
                 $this->bindings->offsetUnset($id);
@@ -97,7 +98,7 @@ final class Container implements ContainerInterface
                 return $concrete($this);
             }
 
-            return new $concrete;
+            return new $concrete();
         }
 
         throw new ContainerException("Service not found: $id");

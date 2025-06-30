@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Core\View;
@@ -12,7 +13,7 @@ interface ViewRendererInterface
      *
      *
      * @param string $template The template file to include, relative to the views directory.
-     * @param array $data Data to pass to the template.
+     * @param array  $data Data to pass to the template.
      *
      * @return string
      * @throws InternalErrorException

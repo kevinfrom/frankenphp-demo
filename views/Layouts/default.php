@@ -1,9 +1,10 @@
 <?php
+
 declare(strict_types=1);
 
 /**
- * @var string $title
- * @var string $content
+ * @var string                           $title
+ * @var string                           $content
  * @var \Core\View\ViewRendererInterface $this
  */
 

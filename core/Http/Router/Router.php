@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Core\Http\Router;
@@ -14,6 +15,7 @@ use Core\Http\Response\ServerResponseInterface;
 use Core\Http\RouteParser\RouteParserInterface;
 use Core\Http\Runner\HttpRunnerInterface;
 use Throwable;
+
 use function Core\config;
 use function Core\redirect;
 use function Core\response;
@@ -24,13 +26,12 @@ final readonly class Router implements RouterInterface
     protected ArrayObject $routes;
 
     public function __construct(
-        public RouteParserInterface            $parser,
-        public HttpRunnerInterface             $runner,
-        public RequestFactoryInterface         $factory,
-        public MiddlewareQueueInterface        $middlewareQueue,
+        public RouteParserInterface $parser,
+        public HttpRunnerInterface $runner,
+        public RequestFactoryInterface $factory,
+        public MiddlewareQueueInterface $middlewareQueue,
         public ServerResponseRendererInterface $renderer
-    )
-    {
+    ) {
         $this->routes = new ArrayObject();
     }
 
@@ -88,8 +89,12 @@ final readonly class Router implements RouterInterface
     /**
      * @inheritDoc
      */
-    public function redirect(string $path, string $to, int $statusCode = 302, array $methods = ['GET', 'HEAD', 'POST', 'PUT', 'PATCH', 'DELETE']): void
-    {
+    public function redirect(
+        string $path,
+        string $to,
+        int $statusCode = 302,
+        array $methods = ['GET', 'HEAD', 'POST', 'PUT', 'PATCH', 'DELETE']
+    ): void {
         $this->addRoute($methods, $path, function () use ($to, $statusCode): ServerResponseInterface {
             return redirect($to, $statusCode);
         });
@@ -99,11 +104,12 @@ final readonly class Router implements RouterInterface
      * Wrap handler in a RequestHandlerInterface.
      *
      * @param callable $handler
+     *
      * @return RequestHandlerInterface
      */
     protected function wrapHandler(callable $handler): RequestHandlerInterface
     {
-        return new readonly class($handler) implements RequestHandlerInterface {
+        return new readonly class ($handler) implements RequestHandlerInterface {
             public function __construct(protected Closure $handler)
             {
             }
@@ -130,7 +136,7 @@ final readonly class Router implements RouterInterface
     public function dispatch(): never
     {
         try {
-            $request = $this->factory->fromGlobals();
+            $request  = $this->factory->fromGlobals();
             $response = $this->runner->run($this->middlewareQueue, $request);
         } catch (Throwable $e) {
             if (config()->get('debug')) {

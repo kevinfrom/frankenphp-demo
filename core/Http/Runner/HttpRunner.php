@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Core\Http\Runner;
@@ -15,8 +16,10 @@ final class HttpRunner implements HttpRunnerInterface
     /**
      * @inheritDoc
      */
-    public function run(MiddlewareQueueInterface $middlewareQueue, ServerRequestInterface $request): ServerResponseInterface
-    {
+    public function run(
+        MiddlewareQueueInterface $middlewareQueue,
+        ServerRequestInterface $request
+    ): ServerResponseInterface {
         $middlewareQueue->rewind();
         $this->middlewareQueue = $middlewareQueue;
 

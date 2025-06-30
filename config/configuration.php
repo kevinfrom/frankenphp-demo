@@ -1,11 +1,12 @@
 <?php
+
 declare(strict_types=1);
 
 use function Core\config;
 
 config()->set([
     'debug' => true,
-    'App' => [
+    'App'   => [
         'name' => 'FrankenPHP demo',
     ],
     'Error' => [

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Core\Http\Response;
@@ -24,16 +25,15 @@ final class ServerResponse implements ServerResponseInterface
     protected ArrayObject $headers;
 
     /**
-     * @param string|ViewInterface $body
-     * @param int $statusCode
+     * @param string|ViewInterface                 $body
+     * @param int                                  $statusCode
      * @param array<string, string|int|float|null> $headers
      */
     public function __construct(
         protected string|ViewInterface $body = '',
-        protected int                  $statusCode = 200,
-        array                          $headers = []
-    )
-    {
+        protected int $statusCode = 200,
+        array $headers = []
+    ) {
         $this->headers = new ArrayObject();
 
         foreach ($headers as $name => $value) {

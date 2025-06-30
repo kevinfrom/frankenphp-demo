@@ -1,7 +1,9 @@
 <?php
+
 declare(strict_types=1);
 
 use App\Application;
+
 use function Core\env;
 
 ini_set('display_errors', 'on');

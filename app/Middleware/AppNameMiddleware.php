@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Middleware;
@@ -8,6 +9,7 @@ use Core\Http\Middleware\MiddlewareInterface;
 use Core\Http\Request\RequestHandlerInterface;
 use Core\Http\Request\ServerRequestInterface;
 use Core\Http\Response\ServerResponseInterface;
+
 use function Core\config;
 
 final readonly class AppNameMiddleware implements MiddlewareInterface

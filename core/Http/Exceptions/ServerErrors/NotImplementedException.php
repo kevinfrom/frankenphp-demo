@@ -1,11 +1,12 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Core\Http\Exceptions\ServerErrors;
 
 use Core\Http\Exceptions\HttpException;
 
-final  class NotImplementedException extends HttpException
+final class NotImplementedException extends HttpException
 {
     public const int STATUS_CODE = 501;
     public const string REASON_PHRASE = 'Not Implemented';

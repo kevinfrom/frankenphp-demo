@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Core\Container\ServiceProviders;
@@ -43,11 +44,11 @@ final readonly class CoreServiceProvider implements ServiceProviderInterface
         }, true);
 
         $container->bind(RouterInterface::class, function (Container $container): RouterInterface {
-            $parser = $container->get(RouteParserInterface::class);
-            $runner = $container->get(HttpRunnerInterface::class);
+            $parser               = $container->get(RouteParserInterface::class);
+            $runner               = $container->get(HttpRunnerInterface::class);
             $serverRequestFactory = $container->get(RequestFactoryInterface::class);
-            $middlewareQueue = $container->get(MiddlewareQueueInterface::class);
-            $renderer = $container->get(ServerResponseRendererInterface::class);
+            $middlewareQueue      = $container->get(MiddlewareQueueInterface::class);
+            $renderer             = $container->get(ServerResponseRendererInterface::class);
 
             return new Router($parser, $runner, $serverRequestFactory, $middlewareQueue, $renderer);
         }, true);

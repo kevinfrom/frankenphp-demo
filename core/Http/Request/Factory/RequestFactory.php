@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Core\Http\Request\Factory;
@@ -6,7 +7,6 @@ namespace Core\Http\Request\Factory;
 use Core\Http\Exceptions\ClientErrors\BadRequestException;
 use Core\Http\Request\ServerRequest;
 use Core\Http\Request\ServerRequestInterface;
-use Core\Http\Route\RouteInterface;
 use Core\Http\RouteParser\RouteParserInterface;
 
 final readonly class RequestFactory implements RequestFactoryInterface
@@ -37,7 +37,7 @@ final readonly class RequestFactory implements RequestFactoryInterface
      */
     protected function parseMethod(): string
     {
-        $method = $_SERVER['REQUEST_METHOD'] ?? RouteInterface::GET;
+        $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
 
         return $this->routeParser->normalizeMethod($method);
     }

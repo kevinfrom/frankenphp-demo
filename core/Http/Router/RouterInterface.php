@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Core\Http\Router;
@@ -12,7 +13,7 @@ interface RouterInterface
      * Add a route to the router.
      *
      * @param string[] $methods The HTTP methods for the route, e.g., 'GET', 'POST', etc.
-     * @param string $path
+     * @param string   $path
      * @param callable $handler
      *
      * @return void
@@ -22,8 +23,9 @@ interface RouterInterface
     /**
      * Add a GET and HEAD route to the router.
      *
-     * @param string $path
+     * @param string   $path
      * @param callable $handler
+     *
      * @return void
      */
     public function get(string $path, callable $handler): void;
@@ -31,8 +33,9 @@ interface RouterInterface
     /**
      * Add a POST route to the router.
      *
-     * @param string $path
+     * @param string   $path
      * @param callable $handler
+     *
      * @return void
      */
     public function post(string $path, callable $handler): void;
@@ -40,8 +43,9 @@ interface RouterInterface
     /**
      * Add a PUT route to the router.
      *
-     * @param string $path
+     * @param string   $path
      * @param callable $handler
+     *
      * @return void
      */
     public function put(string $path, callable $handler): void;
@@ -49,8 +53,9 @@ interface RouterInterface
     /**
      * Add a PATCH route to the router.
      *
-     * @param string $path
+     * @param string   $path
      * @param callable $handler
+     *
      * @return void
      */
     public function patch(string $path, callable $handler): void;
@@ -58,8 +63,9 @@ interface RouterInterface
     /**
      * Add a DELETE route to the router.
      *
-     * @param string $path
+     * @param string   $path
      * @param callable $handler
+     *
      * @return void
      */
     public function delete(string $path, callable $handler): void;
@@ -67,14 +73,19 @@ interface RouterInterface
     /**
      * Register a redirect route.
      *
-     * @param string $path
-     * @param string $to
-     * @param int $statusCode
+     * @param string   $path
+     * @param string   $to
+     * @param int      $statusCode
      * @param string[] $methods
      *
      * @return void
      */
-    public function redirect(string $path, string $to, int $statusCode = 302, array $methods = ['GET', 'HEAD', 'POST', 'PUT', 'PATCH', 'DELETE']): void;
+    public function redirect(
+        string $path,
+        string $to,
+        int $statusCode = 302,
+        array $methods = ['GET', 'HEAD', 'POST', 'PUT', 'PATCH', 'DELETE']
+    ): void;
 
     /**
      * Get middleware queue.

@@ -4,6 +4,10 @@
     "version": "0.1.0",
     "license": "MIT",
     "type": "project",
+    "scripts": {
+        "lint": "phpcs",
+        "lint:fix": "phpcbf"
+    },
     "require": {
         "php": "^8.4",
         "psr/container": "^2.0.2",
@@ -19,6 +23,7 @@
         }
     },
     "require-dev": {
-        "symfony/var-dumper": "^6.4.23"
+        "symfony/var-dumper": "^6.4.23",
+        "squizlabs/php_codesniffer": "^3.12.2"
     }
 }

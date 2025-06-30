@@ -1,10 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
 /**
  * Error 500 template.
  *
- * @var Throwable $exception
+ * @var Throwable                        $exception
  * @var \Core\View\ViewRendererInterface $this
  */
 ?>

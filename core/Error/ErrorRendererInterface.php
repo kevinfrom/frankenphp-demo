@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Core\Error;
@@ -13,6 +14,7 @@ interface ErrorRendererInterface
      * Renders an exception to a response.
      *
      * @param HttpException|Throwable $exception
+     *
      * @return ServerResponseInterface
      */
     public function renderException(HttpException|Throwable $exception): ServerResponseInterface;

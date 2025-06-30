@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Core\Http\Middleware\Queue;
@@ -31,7 +32,7 @@ final class MiddlewareQueue implements MiddlewareQueueInterface
             if ($this->container->has($middleware)) {
                 $middleware = $this->container->get($middleware);
             } else {
-                $middleware = new $middleware;
+                $middleware = new $middleware();
             }
         }
 

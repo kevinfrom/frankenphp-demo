@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Core\View;
@@ -22,8 +23,9 @@ interface ViewInterface
     /**
      * Set template data
      *
-     * @param string|array $key If key is a string, it will be used as the key for the value. If $key is an array, it will be merged with the existing data.
-     * @param mixed $value If $key is a string, this will be the value associated with that key. If $key is an array, this parameter is ignored.
+     * @param string|array $key If $key is an array, it will be merged with the existing data.
+     * @param mixed        $value If $key is an array, this parameter is ignored.
+     *
      * @return void
      */
     public function setData(string|array $key, mixed $value): void;

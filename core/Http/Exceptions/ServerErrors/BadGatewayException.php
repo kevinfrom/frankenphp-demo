@@ -1,11 +1,12 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Core\Http\Exceptions\ServerErrors;
 
 use Core\Http\Exceptions\HttpException;
 
-final  class BadGatewayException extends HttpException
+final class BadGatewayException extends HttpException
 {
     public const int STATUS_CODE = 502;
     public const string REASON_PHRASE = 'Bad Gateway';
