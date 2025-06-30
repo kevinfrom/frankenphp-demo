@@ -7,8 +7,9 @@ declare(strict_types=1);
 
 /** @var array<string, string> $routes */
 $routes = [
-    '/' => 'Home',
-    '/about' => 'About',
+    '/'         => 'Home',
+    '/about'    => 'About',
+    '/redirect' => 'Redirect',
 ];
 
 $routeIsActive = function (string $route) {

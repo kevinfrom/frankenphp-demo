@@ -12,6 +12,7 @@ use Core\Http\Exceptions\ClientErrors\NotFoundException;
 use Core\Http\Exceptions\ServerErrors\InternalErrorException;
 use Core\Http\Middleware\Queue\MiddlewareQueueInterface;
 use Core\Http\Router\RouterInterface;
+use function Core\redirect;
 use function Core\view;
 
 final class Application extends BaseApplication
@@ -48,7 +49,8 @@ final class Application extends BaseApplication
         $router->get('/', fn() => view('Pages/index'));
         $router->get('/about', fn() => view('Pages/about'));
 
-        $router->redirect('/redirect', '/about');
+        $router->get('/redirect', fn() => view('Pages/redirect'));
+        $router->post('/redirect', fn() => redirect('/about'));
     }
 
     /**
