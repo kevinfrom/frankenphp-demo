@@ -12,3 +12,4 @@ services:
     environment:
       TZ: Europe/Copenhagen
       SERVER_NAME: ${SERVER_NAME:-localhost}
+      FRANKENPHP_CONFIG: ${FRANKENPHP_CONFIG}

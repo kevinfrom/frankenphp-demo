@@ -158,7 +158,7 @@ final readonly class Router implements RouterInterface
      * @inheritDoc
      * @throws Throwable
      */
-    public function dispatch(): never
+    public function dispatch(): string
     {
         try {
             $request  = $this->factory->fromGlobals();
@@ -171,7 +171,7 @@ final readonly class Router implements RouterInterface
             $response = response('Internal Server Error', 500);
         }
 
-        $this->renderer->render($response);
+        return $this->renderer->render($response);
     }
 
     /**

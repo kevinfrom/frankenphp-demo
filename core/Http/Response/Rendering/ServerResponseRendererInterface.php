@@ -13,7 +13,7 @@ interface ServerResponseRendererInterface
      *
      * @param ServerResponseInterface $response
      *
-     * @return never
+     * @return string
      */
-    public function render(ServerResponseInterface $response): never;
+    public function render(ServerResponseInterface $response): string;
 }

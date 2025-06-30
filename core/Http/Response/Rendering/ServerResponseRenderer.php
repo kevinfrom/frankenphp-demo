@@ -11,7 +11,7 @@ final readonly class ServerResponseRenderer implements ServerResponseRendererInt
     /**
      * @inheritDoc
      */
-    public function render(ServerResponseInterface $response): never
+    public function render(ServerResponseInterface $response): string
     {
         http_response_code($response->getStatusCode());
 
@@ -19,6 +19,6 @@ final readonly class ServerResponseRenderer implements ServerResponseRendererInt
             header("$name: $value");
         }
 
-        exit($response->getStringBody());
+        return $response->getStringBody();
     }
 }

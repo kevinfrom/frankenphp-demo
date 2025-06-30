@@ -109,9 +109,9 @@ interface RouterInterface
     /**
      * Dispatch the request to the appropriate route.
      *
-     * @return never
+     * @return string
      */
-    public function dispatch(): never;
+    public function dispatch(): string;
 
     /**
      * Match the request to a route.

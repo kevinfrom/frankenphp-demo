@@ -117,14 +117,14 @@ abstract class BaseApplication
     /**
      * Run the application.
      *
-     * @return never
+     * @return string
      * @throws ContainerException
      * @throws ReflectionException
      */
-    final public function run(): never
+    final public function run(): string
     {
         $router = $this->container->get(RouterInterface::class);
-        $router->dispatch();
-        exit;
+
+        return $router->dispatch();
     }
 }

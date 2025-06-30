@@ -9,9 +9,10 @@
         "lint:fix": "phpcbf"
     },
     "require": {
-        "php": "^8.4",
-        "psr/container": "^2.0.2",
-        "psr/clock": "^1.0"
+        "php"           : "^8.4",
+        "psr/container" : "^2.0.2",
+        "psr/clock"     : "^1.0",
+        "ext-frankenphp": "*"
     },
     "autoload": {
         "files": [
