@@ -13,7 +13,9 @@ final readonly class ServerResponseRenderer implements ServerResponseRendererInt
      */
     public function render(ServerResponseInterface $response): string
     {
-        headers_send(103);
+        if (extension_loaded('frankenphp')) {
+            headers_send(103);
+        }
 
         $statusCode = $response->getStatusCode();
 
