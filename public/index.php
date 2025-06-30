@@ -18,8 +18,12 @@ $handler = static function () use ($app): void {
     echo $app->run();
 };
 
-// Short circuit if not running in FrankenPHP worker mode
-if (empty($_SERVER['FRANKENPHP_CONFIG']) || !str_contains($_SERVER['FRANKENPHP_CONFIG'], 'worker')) {
+// Short circuit if FrankenPHP extension is not loaded or is not running in FrankenPHP worker mode
+if (
+    !extension_loaded('frankenphp')
+    || empty($_SERVER['FRANKENPHP_CONFIG'])
+    || !str_contains($_SERVER['FRANKENPHP_CONFIG'], 'worker')
+) {
     $handler();
     exit;
 }
