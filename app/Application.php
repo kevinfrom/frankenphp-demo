@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App;
 
+use App\Controller\ErrorController;
 use App\Middleware\AppNameMiddleware;
 use App\Middleware\TimerMiddleware;
 use Core\BaseApplication;
@@ -11,7 +12,6 @@ use Core\Http\Exceptions\ClientErrors\NotFoundException;
 use Core\Http\Exceptions\ServerErrors\InternalErrorException;
 use Core\Http\Middleware\Queue\MiddlewareQueueInterface;
 use Core\Http\Router\RouterInterface;
-
 use function Core\redirect;
 use function Core\view;
 
@@ -41,6 +41,9 @@ final class Application extends BaseApplication
 
         $router->get('/redirect', fn() => view('Pages/redirect'));
         $router->post('/redirect', fn() => redirect('/about'));
+
+        $router->controller(['GET'], '/error/404', ErrorController::class, 'throw404');
+        $router->controller(['GET'], '/error/500', ErrorController::class, 'throw500');
     }
 
     /**

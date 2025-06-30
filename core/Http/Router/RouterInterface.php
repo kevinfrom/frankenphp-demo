@@ -21,6 +21,18 @@ interface RouterInterface
     public function addRoute(array $methods, string $path, callable $handler): void;
 
     /**
+     * Register a controller route.
+     *
+     * @param string[]      $methods The HTTP methods for the route, e.g., 'GET', 'POST', etc.
+     * @param string        $path
+     * @param object|string $controller The controller class or object that handles the request.
+     * @param string        $action The action method in the controller that will handle the request.
+     *
+     * @return void
+     */
+    public function controller(array $methods, string $path, object|string $controller, string $action = 'index'): void;
+
+    /**
      * Add a GET and HEAD route to the router.
      *
      * @param string   $path

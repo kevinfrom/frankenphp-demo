@@ -6,6 +6,7 @@ namespace Core\Http\Router;
 
 use ArrayObject;
 use Closure;
+use Core\Container\ContainerException;
 use Core\Http\Middleware\Queue\MiddlewareQueueInterface;
 use Core\Http\Request\Factory\RequestFactoryInterface;
 use Core\Http\Request\RequestHandlerInterface;
@@ -14,9 +15,11 @@ use Core\Http\Response\Rendering\ServerResponseRendererInterface;
 use Core\Http\Response\ServerResponseInterface;
 use Core\Http\RouteParser\RouteParserInterface;
 use Core\Http\Runner\HttpRunnerInterface;
+use InvalidArgumentException;
+use ReflectionException;
 use Throwable;
-
 use function Core\config;
+use function Core\container;
 use function Core\redirect;
 use function Core\response;
 
@@ -44,6 +47,28 @@ final readonly class Router implements RouterInterface
             $id = $this->parser->getRouteId($method, $path);
             $this->routes->offsetSet($id, $this->wrapHandler($handler));
         }
+    }
+
+    /**
+     * @inheritDoc
+     * @throws ReflectionException
+     * @throws ContainerException
+     */
+    public function controller(array $methods, string $path, object|string $controller, string $action = 'index'): void
+    {
+        if (!method_exists($controller, $action)) {
+            throw new InvalidArgumentException("Invalid controller action $action on controller $controller");
+        }
+
+        $handler = function (ServerRequestInterface $request) use ($controller, $action): ServerResponseInterface {
+            if (is_string($controller)) {
+                $controller = container()->get($controller);
+            }
+
+            return $controller->{$action}($request);
+        };
+
+        $this->addRoute($methods, $path, $handler);
     }
 
     /**
