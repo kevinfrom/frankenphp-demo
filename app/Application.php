@@ -9,8 +9,6 @@ use App\Middleware\AppNameMiddleware;
 use App\Middleware\TimerMiddleware;
 use Core\BaseApplication;
 use Core\Config\ConfigInterface;
-use Core\Http\Exceptions\ClientErrors\NotFoundException;
-use Core\Http\Exceptions\ServerErrors\InternalErrorException;
 use Core\Http\Middleware\Queue\MiddlewareQueueInterface;
 use Core\Http\Router\RouterInterface;
 use function Core\redirect;
@@ -42,9 +40,6 @@ final class Application extends BaseApplication
      */
     public function routes(RouterInterface $router): void
     {
-        $router->get('/error404', fn() => throw new NotFoundException('Test 404 exception'));
-        $router->get('/error500', fn() => throw new InternalErrorException('Test 500 exception'));
-
         $router->get('/', fn() => view('Pages/index'));
         $router->get('/about', fn() => view('Pages/about'));
 
