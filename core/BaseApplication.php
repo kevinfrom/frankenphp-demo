@@ -41,7 +41,7 @@ abstract class BaseApplication
         $config->set([
             'debug' => true,
             'App'   => [
-                'timezone' => env('APP_TIMEZONE') ?: 'Europe/Copenhagen',
+                'timezone' => env('APP_TIMEZONE') ?: env('TZ') ?: 'UTC',
             ],
             'Error' => [
                 'templates' => [
