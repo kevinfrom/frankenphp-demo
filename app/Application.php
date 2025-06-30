@@ -46,7 +46,7 @@ final class Application extends BaseApplication
         $router->get('/redirect', fn() => view('Pages/redirect'));
         $router->post('/redirect', fn() => redirect('/about'));
 
-        $router->controller(['GET'], '/error/404', ErrorController::class, 'throw404');
-        $router->controller(['GET'], '/error/500', ErrorController::class, 'throw500');
+        $router->controller(['GET', 'HEAD'], '/error/404', ErrorController::class, 'throw404');
+        $router->controller(['GET', 'HEAD'], '/error/500', ErrorController::class, 'throw500');
     }
 }
