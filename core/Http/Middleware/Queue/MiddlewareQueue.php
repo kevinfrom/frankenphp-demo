@@ -7,9 +7,9 @@ namespace Core\Http\Middleware\Queue;
 use ArrayObject;
 use Core\Container\Container;
 use Core\Container\ContainerException;
-use Core\Container\NotFoundException;
 use Core\Http\Middleware\MiddlewareInterface;
 use Core\Http\Request\RequestHandlerInterface;
+use ReflectionException;
 
 final class MiddlewareQueue implements MiddlewareQueueInterface
 {
@@ -23,17 +23,13 @@ final class MiddlewareQueue implements MiddlewareQueueInterface
 
     /**
      * @inheritDoc
-     * @throws NotFoundException
+     * @throws ReflectionException
      * @throws ContainerException
      */
     public function addMiddleware(object|string $middleware): void
     {
         if (is_string($middleware)) {
-            if ($this->container->has($middleware)) {
-                $middleware = $this->container->get($middleware);
-            } else {
-                $middleware = new $middleware();
-            }
+            $middleware = $this->container->get($middleware);
         }
 
         $this->queue->append($middleware);

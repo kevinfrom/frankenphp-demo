@@ -11,7 +11,7 @@ use Core\Http\Middleware\Queue\MiddlewareQueueInterface;
 use Core\Http\Middleware\RoutingMiddleware;
 use Core\Http\Router\RouterInterface;
 use Psr\Container\ContainerExceptionInterface;
-use Psr\Container\NotFoundExceptionInterface;
+use ReflectionException;
 
 abstract class BaseApplication
 {
@@ -34,7 +34,6 @@ abstract class BaseApplication
      * @param Container $container
      *
      * @return Container
-     * @throws ContainerExceptionInterface
      */
     public function services(Container $container): Container
     {
@@ -79,7 +78,7 @@ abstract class BaseApplication
      *
      * @return never
      * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
+     * @throws ReflectionException
      */
     final public function run(): never
     {

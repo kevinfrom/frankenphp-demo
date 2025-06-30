@@ -4,31 +4,18 @@ declare(strict_types=1);
 
 namespace App;
 
-use App\Container\ServiceProviders\AppServiceProvider;
 use App\Middleware\AppNameMiddleware;
 use App\Middleware\TimerMiddleware;
 use Core\BaseApplication;
-use Core\Container\Container;
 use Core\Http\Exceptions\ClientErrors\NotFoundException;
 use Core\Http\Exceptions\ServerErrors\InternalErrorException;
 use Core\Http\Middleware\Queue\MiddlewareQueueInterface;
 use Core\Http\Router\RouterInterface;
-
 use function Core\redirect;
 use function Core\view;
 
 final class Application extends BaseApplication
 {
-    /**
-     * @inheritDoc
-     */
-    public function services(Container $container): Container
-    {
-        new AppServiceProvider()->register($container);
-
-        return parent::services($container);
-    }
-
     /**
      * @inheritDoc
      */

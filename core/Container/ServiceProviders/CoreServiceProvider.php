@@ -8,7 +8,6 @@ use Core\Clock\Clock;
 use Core\Config\Config;
 use Core\Config\ConfigInterface;
 use Core\Container\Container;
-use Core\Container\ContainerException;
 use Core\Error\ErrorRenderer;
 use Core\Error\ErrorRendererInterface;
 use Core\Http\Middleware\ErrorHandlerMiddleware;
@@ -34,55 +33,17 @@ final readonly class CoreServiceProvider implements ServiceProviderInterface
 {
     /**
      * @inheritDoc
-     * @throws ContainerException
      */
     public function register(Container $container): void
     {
-        /** Singletons */
-        $container->bind(MiddlewareQueueInterface::class, function (Container $container): MiddlewareQueue {
-            return new MiddlewareQueue($container);
-        }, true);
+        $container->bindSingleton(ConfigInterface::class, fn(): ConfigInterface => Config::getInstance());
+        $container->bindSingleton(MiddlewareQueueInterface::class, MiddlewareQueue::class);
+        $container->bindSingleton(RouterInterface::class, Router::class);
 
-        $container->bind(RouterInterface::class, function (Container $container): RouterInterface {
-            $parser               = $container->get(RouteParserInterface::class);
-            $runner               = $container->get(HttpRunnerInterface::class);
-            $serverRequestFactory = $container->get(RequestFactoryInterface::class);
-            $middlewareQueue      = $container->get(MiddlewareQueueInterface::class);
-            $renderer             = $container->get(ServerResponseRendererInterface::class);
-
-            return new Router($parser, $runner, $serverRequestFactory, $middlewareQueue, $renderer);
-        }, true);
-
-        /** Factories */
-        $container->bind(ConfigInterface::class, function (): ConfigInterface {
-            return Config::getInstance();
-        });
-
-        $container->bind(RoutingMiddleware::class, function (Container $container): RoutingMiddleware {
-            $router = $container->get(RouterInterface::class);
-
-            return new RoutingMiddleware($router);
-        });
-
-        $container->bind(ErrorHandlerMiddleware::class, function (Container $container): ErrorHandlerMiddleware {
-            $errorRenderer = $container->get(ErrorRendererInterface::class);
-
-            return new ErrorHandlerMiddleware($errorRenderer);
-        });
-
-        $container->bind(RequestFactoryInterface::class, function (Container $container): RequestFactoryInterface {
-            $routeParser = $container->get(RouteParserInterface::class);
-
-            return new RequestFactory($routeParser);
-        });
-
-        $container->bind(HtmlView::class, function (Container $container): HtmlView {
-            $templateHelper = $container->get(ViewRenderer::class);
-
-            return new HtmlView($templateHelper);
-        });
-
-        /** Services */
+        $container->bind(RoutingMiddleware::class);
+        $container->bind(ErrorHandlerMiddleware::class);
+        $container->bind(RequestFactoryInterface::class, RequestFactory::class);
+        $container->bind(HtmlView::class);
         $container->bind(HttpRunnerInterface::class, HttpRunner::class);
         $container->bind(RouteParserInterface::class, RouteParser::class);
         $container->bind(ClockInterface::class, Clock::class);
