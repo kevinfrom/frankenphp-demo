@@ -22,7 +22,7 @@ $handler = static function () use ($app): void {
 if (
     !extension_loaded('frankenphp')
     || empty($_SERVER['FRANKENPHP_CONFIG'])
-    || !str_contains($_SERVER['FRANKENPHP_CONFIG'], 'worker')
+    || !str_contains((string) $_SERVER['FRANKENPHP_CONFIG'], 'worker')
 ) {
     $handler();
     exit;

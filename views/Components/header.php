@@ -13,9 +13,7 @@ $routes = [
     '/redirect' => 'Redirect',
 ];
 
-$routeIsActive = function (string $route) {
-    return parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH) === $route;
-};
+$routeIsActive = (fn(string $route) => parse_url((string) $_SERVER['REQUEST_URI'], PHP_URL_PATH) === $route);
 ?>
 
 <header class="border-b shadow-sm">

@@ -18,7 +18,6 @@ use Core\Http\Runner\HttpRunnerInterface;
 use InvalidArgumentException;
 use ReflectionException;
 use Throwable;
-
 use function Core\config;
 use function Core\container;
 use function Core\redirect;
@@ -121,9 +120,7 @@ final readonly class Router implements RouterInterface
         int $statusCode = 302,
         array $methods = ['GET', 'HEAD', 'POST', 'PUT', 'PATCH', 'DELETE']
     ): void {
-        $this->addRoute($methods, $path, function () use ($to, $statusCode): ServerResponseInterface {
-            return redirect($to, $statusCode);
-        });
+        $this->addRoute($methods, $path, fn(): ServerResponseInterface => redirect($to, $statusCode));
     }
 
     /**
