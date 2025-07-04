@@ -11,6 +11,7 @@ use Core\BaseApplication;
 use Core\Config\ConfigInterface;
 use Core\Http\Middleware\Queue\MiddlewareQueueInterface;
 use Core\Http\Router\RouterInterface;
+
 use function Core\redirect;
 use function Core\view;
 
