@@ -6,7 +6,9 @@
     "type": "project",
     "scripts": {
         "lint": "phpcs",
-        "lint:fix": "phpcbf"
+        "lint:fix": "phpcbf",
+        "rector": "rector process --dry-run",
+        "rector:fix": "rector process"
     },
     "require": {
         "php"           : "^8.4",
