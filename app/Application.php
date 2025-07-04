@@ -11,13 +11,14 @@ use Core\BaseApplication;
 use Core\Config\ConfigInterface;
 use Core\Http\Middleware\Queue\MiddlewareQueueInterface;
 use Core\Http\Router\RouterInterface;
+use Override;
 
 use function Core\redirect;
 use function Core\view;
 
 final class Application extends BaseApplication
 {
-    #[\Override]
+    #[Override]
     public function configuration(ConfigInterface $config): ConfigInterface
     {
         $config = parent::configuration($config);
@@ -29,7 +30,7 @@ final class Application extends BaseApplication
     /**
      * @inheritDoc
      */
-    #[\Override]
+    #[Override]
     public function middleware(MiddlewareQueueInterface $middleware): void
     {
         parent::middleware($middleware);
