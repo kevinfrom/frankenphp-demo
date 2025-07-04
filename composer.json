@@ -6,7 +6,9 @@
     "type": "project",
     "scripts": {
         "lint": "phpcs",
-        "lint:fix": "phpcbf"
+        "lint:fix": "phpcbf",
+        "rector": "rector process --dry-run",
+        "rector:fix": "rector process"
     },
     "require": {
         "php"           : "^8.4",
@@ -24,6 +26,7 @@
     },
     "require-dev": {
         "symfony/var-dumper": "^6.4.23",
-        "squizlabs/php_codesniffer": "^3.13.2"
+        "squizlabs/php_codesniffer": "^3.13.2",
+        "rector/rector": "^2.1"
     }
 }
