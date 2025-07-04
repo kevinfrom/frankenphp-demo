@@ -6,9 +6,8 @@ services:
     volumes:
       - ./:/app
     ports:
-      - 80:80
-      - 443:443
-      - 443:443/udp
+      - ${HTTPS_PORT:-443}:443
+      - ${HTTPS_PORT:-443}:443/udp
     environment:
       TZ: Europe/Copenhagen
       SERVER_NAME: ${SERVER_NAME:-localhost}

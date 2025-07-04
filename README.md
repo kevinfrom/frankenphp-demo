@@ -14,7 +14,7 @@ docker-compose up -d
 
 Set the `SERVER_NAME` environment variable in your `.env` file to the domain you want to use, or leave it as `localhost` for local testing.
 
-Then you can access the app at port `80` and `443`.
+You can also control the `SERVER_PORT` variable in your `.env` file to change the port Caddy will listen to HTTPS requests on. Note, that you must always connect via HTTPS, even in local development, since FrankenPHP requires it.
 
 ## Development
 
